@@ -1,0 +1,7 @@
+server:
+  port: 5000
+  address: 0.0.0.0   # IMPORTANT for Docker
+
+external:
+  product-api:
+    base-url: http://simulado:80

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.5.7</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.inditex.zara</groupId>
+	<artifactId>similarproducts</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>similarproducts</name>
+	<description>microservice to get similar products</description>
+	<url/>
+
+	<developers>
+		<developer>
+			<id>maximiliano-maio</id>
+			<name>Maximiliano Maio</name>
+			<email>maximiliano.maio.p@gmail</email>
+			<url>https://github.com/b2d95bb5-e2ae-48d8-b461-504a1585b0e0</url>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>Europe/Madrid</timezone>
+		</developer>
+	</developers>
+    <scm>
+        <connection>scm:git:https://github.com/b2d95bb5-e2ae-48d8-b461-504a1585b0e0/inditex-test.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/b2d95bb5-e2ae-48d8-b461-504a1585b0e0/inditex-test.git</developerConnection>
+        <url>https://github.com/b2d95bb5-e2ae-48d8-b461-504a1585b0e0/inditex-test</url>
+        <tag>HEAD</tag>
+    </scm>
+
+	<properties>
+		<java.version>17</java.version>
+		<spring-boot.version>3.5.7</spring-boot.version>
+		<openapi.generator.version>7.17.0</openapi.generator.version>
+		<default.package>com.inditex.zara.similarproducts</default.package>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring-boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- Spring Boot -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+		<!-- OpenAPI Generated Models -->
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>jackson-databind-nullable</artifactId>
+			<version>0.2.8</version>
+		</dependency>
+		<!-- Resilience4j integration with Spring Boot 3 -->
+		<dependency>
+			<groupId>io.github.resilience4j</groupId>
+			<artifactId>resilience4j-spring-boot3</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.github.resilience4j</groupId>
+			<artifactId>resilience4j-micrometer</artifactId>
+			<version>2.3.0</version>
+		</dependency>
+
+		<!-- AOP for annotations like @CircuitBreaker, @Retry -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
+		<!-- Cache + Caffeine implementation -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-cache</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.github.ben-manes.caffeine</groupId>
+			<artifactId>caffeine</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger.core.v3</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>2.2.40</version>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger.core.v3</groupId>
+			<artifactId>swagger-models</artifactId>
+			<version>2.2.40</version>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.validation</groupId>
+			<artifactId>jakarta.validation-api</artifactId>
+			<version>3.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+		</dependency>
+		<!-- Testing -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>5.10.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>RELEASE</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-test</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<!-- OpenAPI Code Generator -->
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<version>${openapi.generator.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<additionalProperties>
+								<useJUnit5>true</useJUnit5>
+								<useSpringController>true</useSpringController>
+								<delegatePattern>true</delegatePattern>
+							</additionalProperties>
+							<inputSpec>${project.basedir}/src/main/resources/api/similarProducts.yaml</inputSpec>
+							<generatorName>spring</generatorName>
+							<library>spring-boot</library>
+
+							<generateApis>true</generateApis>
+							<generateModels>true</generateModels>
+
+							<generateApiTests>true</generateApiTests>
+							<generateModelTests>true</generateModelTests>
+							<apiPackage>${default.package}.infrastructure.adapter.in.web</apiPackage>
+							<modelPackage>${default.package}.domain.model</modelPackage>
+							<invokerPackage>${default.package}.infrastructure.adapter.in.web</invokerPackage>
+
+							<configOptions>
+								<dateLibrary>localdatetime</dateLibrary>
+								<useSpringBoot>true</useSpringBoot>
+								<useJakartaEe>true</useJakartaEe>
+								<hideGenerationTimestamp>true</hideGenerationTimestamp>
+								<modelMutable>false</modelMutable>  <!-- record-like immutability -->
+								<useBeanValidation>true</useBeanValidation>
+								<generateSpringBootApplication>false</generateSpringBootApplication>
+								<interfaceOnly>false</interfaceOnly>
+								<reactive>true</reactive>
+							</configOptions>
+							<output>${project.build.directory}/generated-sources/openapi</output>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
+
+
