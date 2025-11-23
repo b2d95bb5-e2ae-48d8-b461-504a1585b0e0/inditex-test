@@ -1,4 +1,4 @@
-package com.inditex.zara.similarproducts.infrastructure.in.web;
+package com.inditex.zara.similarproducts.adapter.in.web;
 
 import com.inditex.zara.similarproducts.application.service.SimilarProductsService;
 import com.inditex.zara.similarproducts.domain.model.ProductDetail;

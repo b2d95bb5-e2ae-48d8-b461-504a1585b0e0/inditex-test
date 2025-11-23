@@ -1,4 +1,4 @@
-package com.inditex.zara.similarproducts.infrastructure.config;
+package com.inditex.zara.similarproducts.adapter.config;
 
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
