@@ -22,12 +22,12 @@ public class WebClientConfig {
         ConnectionProvider provider = ConnectionProvider.builder("webclient-pool")
                 .maxConnections(2000)
                 .pendingAcquireMaxCount(2000)
-                .pendingAcquireTimeout(Duration.ofSeconds(2))
+                .pendingAcquireTimeout(Duration.ofSeconds(3))
                 .build();
 
         HttpClient httpClient = HttpClient.create(provider)
-                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 2000)
-                .responseTimeout(Duration.ofSeconds(2))
+                .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 3000)
+                .responseTimeout(Duration.ofSeconds(3))
                 .compress(true)
                 .keepAlive(true)
                 .secure()
