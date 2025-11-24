@@ -47,3 +47,7 @@ management:
     endpoint:
       prometheus:
         enabled: true
+
+logging:
+  level:
+    root: INFO

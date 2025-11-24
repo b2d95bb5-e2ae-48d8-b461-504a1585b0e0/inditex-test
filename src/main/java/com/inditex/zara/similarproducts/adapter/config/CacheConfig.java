@@ -18,6 +18,7 @@ public class CacheConfig {
         CaffeineCacheManager cacheManager =
                 new CaffeineCacheManager("productDetails", "similarProductIds");
 
+        cacheManager.setAsyncCacheMode(true);
         cacheManager.setCaffeine(
                 Caffeine.newBuilder()
                         .maximumSize(10_000)

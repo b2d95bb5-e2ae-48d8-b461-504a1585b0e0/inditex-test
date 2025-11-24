@@ -57,14 +57,14 @@
 	</dependencyManagement>
 
 	<dependencies>
-		<!-- Spring Boot -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-reactor-netty</artifactId>
 		</dependency>
 		<!-- OpenAPI Generated Models -->
 		<dependency>
@@ -124,30 +124,53 @@
 		</dependency>
 		<!-- Testing -->
 		<dependency>
+			<groupId>io.projectreactor</groupId>
+			<artifactId>reactor-test</artifactId>
+			<version>3.1.0.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Unit + Spring tests (JUnit 5, Mockito, WebFlux test utilities, etc.) -->
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- JUnit 5 (explicit) -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter</artifactId>
 			<version>5.10.0</version>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- Testcontainers core + JUnit 5 integration -->
 		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-			<version>RELEASE</version>
-			<scope>compile</scope>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>testcontainers</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- WireMock (for HTTP stubs) -->
+		<dependency>
+			<groupId>org.wiremock</groupId>
+			<artifactId>wiremock-standalone</artifactId>
+			<version>3.9.1</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-test</artifactId>
+			<groupId>org.wiremock.integrations.testcontainers</groupId>
+			<artifactId>wiremock-testcontainers-module</artifactId>
+			<version>1.0-alpha-15</version>
+			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -168,9 +191,11 @@
 						</goals>
 						<configuration>
 							<additionalProperties>
+								<title>SimilarProducts</title>
+								<artifactId>similarproducts</artifactId>
 								<useJUnit5>true</useJUnit5>
-								<useSpringController>true</useSpringController>
-								<delegatePattern>true</delegatePattern>
+								<useSpringController>false</useSpringController>
+								<delegatePattern>false</delegatePattern>
 							</additionalProperties>
 							<inputSpec>${project.basedir}/src/main/resources/api/similarProducts.yaml</inputSpec>
 							<generatorName>spring</generatorName>
@@ -179,11 +204,13 @@
 							<generateApis>true</generateApis>
 							<generateModels>true</generateModels>
 
-							<generateApiTests>true</generateApiTests>
-							<generateModelTests>true</generateModelTests>
-							<apiPackage>${default.package}.infrastructure.adapter.in.web</apiPackage>
+							<generateApiTests>false</generateApiTests>
+							<generateModelTests>false</generateModelTests>
+
+							<artifactId>similarproducts</artifactId>
+							<apiPackage>${default.package}.adapter.in.web</apiPackage>
 							<modelPackage>${default.package}.domain.model</modelPackage>
-							<invokerPackage>${default.package}.infrastructure.adapter.in.web</invokerPackage>
+							<invokerPackage>${default.package}</invokerPackage>
 
 							<configOptions>
 								<dateLibrary>localdatetime</dateLibrary>
@@ -192,11 +219,10 @@
 								<hideGenerationTimestamp>true</hideGenerationTimestamp>
 								<modelMutable>false</modelMutable>  <!-- record-like immutability -->
 								<useBeanValidation>true</useBeanValidation>
-								<generateSpringBootApplication>false</generateSpringBootApplication>
-								<interfaceOnly>false</interfaceOnly>
+								<interfaceOnly>true</interfaceOnly>
 								<reactive>true</reactive>
 							</configOptions>
-							<output>${project.build.directory}/generated-sources/openapi</output>
+							<output>${project.build.directory}/generated-sources/</output>
 						</configuration>
 					</execution>
 				</executions>

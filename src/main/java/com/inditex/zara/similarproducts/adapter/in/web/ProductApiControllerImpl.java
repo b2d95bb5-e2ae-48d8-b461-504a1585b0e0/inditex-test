@@ -2,7 +2,6 @@ package com.inditex.zara.similarproducts.adapter.in.web;
 
 import com.inditex.zara.similarproducts.application.service.SimilarProductsService;
 import com.inditex.zara.similarproducts.domain.model.ProductDetail;
-import com.inditex.zara.similarproducts.infrastructure.adapter.in.web.ProductApiController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
@@ -10,7 +9,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-public class ProductApiControllerImpl extends ProductApiController {
+public class ProductApiControllerImpl implements ProductApi {
 
     private final SimilarProductsService service;
 
