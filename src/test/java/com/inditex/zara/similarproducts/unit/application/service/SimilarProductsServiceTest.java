@@ -1,8 +1,8 @@
 package com.inditex.zara.similarproducts.unit.application.service;
 
-import com.inditex.zara.similarproducts.adapter.client.ExternalApiClient;
 import com.inditex.zara.similarproducts.application.service.SimilarProductsService;
 import com.inditex.zara.similarproducts.domain.model.ProductDetail;
+import com.inditex.zara.similarproducts.infrastructure.adapter.out.externalproductapi.ExternalApiClient;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -1,8 +1,8 @@
 package com.inditex.zara.similarproducts.unit.adapter.in.web;
 
-import com.inditex.zara.similarproducts.adapter.in.web.ProductApiControllerImpl;
 import com.inditex.zara.similarproducts.application.service.SimilarProductsService;
 import com.inditex.zara.similarproducts.domain.model.ProductDetail;
+import com.inditex.zara.similarproducts.infrastructure.adapter.in.web.ProductApiControllerImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

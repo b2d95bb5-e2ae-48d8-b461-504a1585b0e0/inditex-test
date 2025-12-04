@@ -4,6 +4,10 @@ spring:
 server:
   port: 5000
 
+cache:
+  names:
+    - productDetails
+    - similarProductIds
 
 external:
   product-api:

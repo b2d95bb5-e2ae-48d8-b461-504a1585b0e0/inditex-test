@@ -1,4 +1,4 @@
-package com.inditex.zara.similarproducts;
+package com.inditex.zara.similarproducts.infrastructure.bootstrap;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

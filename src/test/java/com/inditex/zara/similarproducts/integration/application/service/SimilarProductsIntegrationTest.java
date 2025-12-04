@@ -1,6 +1,6 @@
 package com.inditex.zara.similarproducts.integration.application.service;
 
-import com.inditex.zara.similarproducts.SimilarProductsApplication;
+import com.inditex.zara.similarproducts.infrastructure.bootstrap.SimilarProductsApplication;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

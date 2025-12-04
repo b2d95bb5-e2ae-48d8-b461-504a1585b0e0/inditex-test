@@ -1,12 +1,12 @@
-package com.inditex.zara.similarproducts.adapter.client;
+package com.inditex.zara.similarproducts.infrastructure.adapter.out.externalproductapi;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.inditex.zara.similarproducts.application.port.out.ProductSimilarityPort;
 import com.inditex.zara.similarproducts.domain.model.ProductDetail;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
@@ -19,19 +19,15 @@ import java.util.List;
 
 @Component
 @Slf4j
-public class ExternalApiClient {
+public class ExternalApiClient implements ProductSimilarityPort {
 
-    @Qualifier("externalApiWebClient")
     private final WebClient webClient;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     public ExternalApiClient(@Qualifier("externalApiWebClient") WebClient webClient) {
         this.webClient = webClient;
     }
 
-    //@Cacheable(cacheNames = "similarProductIds", key = "#productId")
+    @Cacheable(cacheNames = "similarProductIds", key = "#productId")
     @CircuitBreaker(name = "externalApi", fallbackMethod = "fallbackSimilarProductIds")
     @Retry(name = "externalApi")
     public Mono<List<String>> getSimilarProductIds(String productId) {
@@ -41,7 +37,7 @@ public class ExternalApiClient {
                 .bodyToMono(String.class)
                 .map(json -> {
                     try {
-                        return objectMapper.readValue(json, new TypeReference<List<String>>() {});
+                        return new ObjectMapper().readValue(json, new TypeReference<List<String>>() {});
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
@@ -66,12 +62,10 @@ public class ExternalApiClient {
     // ---- Fallbacks ----
 
     private Mono<List<String>> fallbackSimilarProductIds(String productId, Throwable ex) {
-        // Degrade gracefully: no similar products if external is down
         return Mono.just(Collections.emptyList());
     }
 
     private Mono<ProductDetail> fallbackProductDetail(String productId, Throwable ex) {
-        // You can choose to return a "minimal" product or just propagate error
         return Mono.error(new IllegalStateException(
                 "Product details not available for id " + productId, ex));
     }
