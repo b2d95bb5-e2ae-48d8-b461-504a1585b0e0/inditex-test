@@ -1,7 +1,7 @@
 package com.inditex.zara.similarproducts.infrastructure.adapter.in.web;
 
 import com.inditex.zara.similarproducts.adapter.in.web.ProductApi;
-import com.inditex.zara.similarproducts.application.service.SimilarProductsService;
+import com.inditex.zara.similarproducts.application.port.in.GetSimilarProductsQuery;
 import com.inditex.zara.similarproducts.domain.model.ProductDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,10 +12,10 @@ import reactor.core.publisher.Mono;
 @RestController
 public class ProductApiControllerImpl implements ProductApi {
 
-    private final SimilarProductsService service;
+    private final GetSimilarProductsQuery getSimilarProductsQuery;
 
-    public ProductApiControllerImpl(SimilarProductsService service) {
-        this.service = service;
+    public ProductApiControllerImpl(GetSimilarProductsQuery getSimilarProductsQuery) {
+        this.getSimilarProductsQuery = getSimilarProductsQuery;
     }
 
     @Override
@@ -23,7 +23,7 @@ public class ProductApiControllerImpl implements ProductApi {
             String productId,
             ServerWebExchange exchange
     ) {
-        return service.getSimilarProducts(productId)
+        return getSimilarProductsQuery.getSimilarProducts(productId)
                 .map(list -> ResponseEntity.ok(Flux.fromIterable(list)))
                 .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
     }
