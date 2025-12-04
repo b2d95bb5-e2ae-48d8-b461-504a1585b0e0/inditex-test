@@ -1,0 +1,57 @@
+spring:
+  application:
+    name: similar-products
+server:
+  port: 5000
+
+cache:
+  names:
+    - productDetails
+    - similarProductIds
+
+external:
+  product-api:
+    base-url: http://localhost:3001
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      externalApi:
+        slidingWindowSize: 20
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 5
+        slowCallDurationThreshold: 3s
+        slowCallRateThreshold: 50
+  retry:
+    instances:
+      externalApiFast:
+        maxAttempts: 3
+        waitDuration: 200ms
+
+      externalApiSlow:
+        maxAttempts: 1   # no retry
+
+      externalApi:
+        maxAttempts: 3
+        waitDuration: 200ms
+
+      retryExceptions:
+        - org.springframework.web.reactive.function.client.WebClientRequestException
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  metrics:
+    tags:
+      application: similar-products
+    endpoint:
+      prometheus:
+        enabled: true
+
+logging:
+  level:
+    root: INFO
